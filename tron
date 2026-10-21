@@ -1,0 +1,115 @@
+import turtle
+import time
+
+window = turtle.Screen()
+window.setup(width=900, height=900)
+window._root.resizable(False, False)
+window.bgcolor("black")
+
+p1 = turtle.Turtle()
+p2 = turtle.Turtle()
+counter = turtle.Turtle()
+
+trail1 = []
+trail2 = []
+
+p1.color("blue")
+p2.color("red")
+counter.color("white")
+
+def countdown():
+    counter.setpos(0,0)
+    counter.speed(0)
+    counter.write("READY..")
+    time.sleep(2)
+    counter.clear()
+    counter.write("SET...")
+    time.sleep(2)
+    counter.clear()
+    counter.write("GO!!!")
+    time.sleep(1)
+    counter.clear()
+    counter.hideturtle()
+    p1.pendown()
+    p2.pendown()
+
+
+def setupP1():
+    p1.speed(0)
+    p1.penup()
+    p1.setpos(-440, 0)
+    p1.setheading(0)
+
+
+def setupP2():
+    p2.speed(0)
+    p2.penup()
+    p2.setpos(430, 0)
+    p2.setheading(180)
+
+def loop():
+    while True:
+        p1.forward(5)
+        p2.forward(5)
+        time.sleep(0)
+
+def touchtrailloop1():
+    cpos = p1.pos()
+    for position in (trail1[:20] + trail2[:20]):
+        if p1.distance(position) <3:
+            window.clear()
+            print("Hit! p2 wins!")
+
+
+def touchtrailloop2():
+    cpos = p2.pos()
+    for position in trail1[:20] or trail2[:20]:
+        if p2.distance(position) <3:
+            window.clear()
+            print("Hit! p1 wins!")
+
+def p1up():
+    p1.setheading(90)
+
+def p1down():
+    p1.setheading(-90)
+
+def p1left():
+    p1.setheading(180)
+
+def p1right():
+    p1.setheading(0)
+
+def p2up():
+    p2.setheading(90)
+
+def p2down():
+    p2.setheading(-90)
+
+def p2left():
+    p2.setheading(180)
+
+def p2right():
+    p2.setheading(0)
+
+
+setupP1()
+setupP2()
+countdown()
+
+window.onkey(p1up, "w")
+window.onkey(p1left, "a")
+window.onkey(p1down, "s")
+window.onkey(p1right, "d")
+window.onkey(p2up, "Up")
+window.onkey(p2down, "Down")
+window.onkey(p2left, "Left")
+window.onkey(p2right, "Right")
+
+window.listen()
+
+loop()
+touchtrailloop1()
+touchtrailloop2()
+
+turtle.mainloop()
